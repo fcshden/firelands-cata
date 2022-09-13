@@ -435,6 +435,10 @@ class FC_GAME_API WorldObject : public Object, public WorldLocation
         std::list<AreaTrigger*> SelectNearestAreaTriggers(uint32 spellId, float range);
         AreaTrigger*            SelectRandomAreaTriggerInRange(uint32 spellId, float range);
 
+        template<class NOTIFIER> void VisitNearbyObject(const float& radius, NOTIFIER& notifier, bool loadGrids = false) const { if (IsInWorld()) GetMap()->VisitAll(GetPositionX(), GetPositionY(), radius, notifier, loadGrids); }
+        template<class NOTIFIER> void VisitNearbyGridObject(const float& radius, NOTIFIER& notifier, bool loadGrids = false) const { if (IsInWorld()) GetMap()->VisitGrid(GetPositionX(), GetPositionY(), radius, notifier, loadGrids); }
+        template<class NOTIFIER> void VisitNearbyWorldObject(const float& radius, NOTIFIER& notifier, bool loadGrids = false) const { if (IsInWorld()) GetMap()->VisitWorld(GetPositionX(), GetPositionY(), radius, notifier, loadGrids); }
+
         template <typename Container>
         void GetGameObjectListWithEntryInGrid(Container& gameObjectContainer, uint32 entry, float maxSearchRange = 250.0f) const;
 
